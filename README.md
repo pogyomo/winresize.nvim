@@ -79,6 +79,7 @@ Use this with [submode.nvim](https://github.com/pogyomo/submode.nvim)
 
 ```lua
 local submode = require("submode")
+local resize = require("winresize").resize
 submode.create("WinResize", {
     mode = "n",
     enter = "<Leader>r",
