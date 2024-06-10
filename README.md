@@ -1,12 +1,12 @@
-# winresize.nvim
+# :window: winresize.nvim
 
 A neovim plugin provide apis for resizing window as we expected.
 
-## Requirements
+## :light_bulb: Requirements
 
 * Neovim >= 0.10.0
 
-## Introduction
+## :notebook_with_decorative_cover: Introduction
 
 When we editing files with multiple windows, you may notice a window is small
 for editing the file and will try to resize it.
@@ -63,7 +63,7 @@ vim.keymap.set("n", "rl", resize(0, 2, 2, "right"))
 
 With it, you can resize window intutively.
 
-## Installation
+## :inbox_tray: Installation
 
 With [lazy.nvim](https://github.com/folke/lazy.nvim)
 
@@ -73,7 +73,7 @@ return {
 }
 ```
 
-## APIS
+## :desktop_computer: APIS
 
 - `resize(win, diff_width, diff_height, key)`
     - `win: integer` Window handle for resize. 0 for current window.
