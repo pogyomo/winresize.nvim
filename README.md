@@ -73,6 +73,31 @@ return {
 }
 ```
 
+## :bulb: Examples
+
+Use this with [submode.nvim](https://github.com/pogyomo/submode.nvim)
+
+```lua
+local submode = require("submode")
+submode.create("WinResize", {
+    mode = "n",
+    enter = "<Leader>r",
+    leave = { "q", "<ESC>" },
+}, {
+    lhs = "h",
+    rhs = function() resize(0, 2, 2, "left") end,
+}, {
+    lhs = "j",
+    rhs = function() resize(0, 2, 2, "down") end,
+}, {
+    lhs = "k",
+    rhs = function() resize(0, 2, 2, "up") end,
+}, {
+    lhs = "l",
+    rhs = function() resize(0, 2, 2, "right") end,
+})
+```
+
 ## :desktop_computer: APIS
 
 - `resize(win, diff_width, diff_height, key)`
