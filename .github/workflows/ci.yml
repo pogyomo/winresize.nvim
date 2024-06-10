@@ -17,5 +17,5 @@ jobs:
         with:
           commit_message: "chore(build): auto-generate vimdoc"
           commit_user_name: "github-actions[bot]"
-          commit_user_emails: "github-actions[bot]@user.noreply.github.com"
+          commit_user_email: "github-actions[bot]@user.noreply.github.com"
           commit_author: "github-actions[bot] <github-actions[bot]@user.noreply.github.com>"
