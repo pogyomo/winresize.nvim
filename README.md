@@ -37,7 +37,7 @@ right edge of the window, and `rj` and `rk` moves bottom edge of the window.
 ```
 
 But unfortunately, the keymaps doesn't works when we are here of the layout, as the
-movement of `rh` and `rl` inverted as we expected.
+movement of `rh` and `rl` inverted compare to as we expected.
 
 ```
 +-------------+-------------+
