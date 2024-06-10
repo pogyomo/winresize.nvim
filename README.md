@@ -2,11 +2,11 @@
 
 A neovim plugin provide apis for resizing window as we expected.
 
-## :light_bulb: Requirements
+## :clipboard: Requirements
 
 * Neovim >= 0.10.0
 
-## :notebook_with_decorative_cover: Introduction
+## :notebook: Introduction
 
 When we editing files with multiple windows, you may notice a window is small
 for editing the file and will try to resize it.
