@@ -102,6 +102,7 @@ submode.create("WinResize", {
 ## :desktop_computer: APIS
 
 - `resize(win, diff_width, diff_height, key)`
+    - Resize the window which is either normal window or floating window.
     - `win: integer` Window handle for resize. 0 for current window.
     - `diff_width: integer` How much to move when resize window width. Must be positive.
     - `diff_height: integer` How much to move when resize window height. Must be positive.
