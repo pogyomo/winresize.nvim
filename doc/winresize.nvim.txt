@@ -1,4 +1,4 @@
-*winresize.nvim.txt*       For Neovim >= 0.10.0      Last change: 2024 June 10
+*winresize.nvim.txt*       For Neovim >= 0.10.0      Last change: 2024 June 11
 
 ==============================================================================
 Table of Contents                           *winresize.nvim-table-of-contents*
