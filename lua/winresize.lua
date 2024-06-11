@@ -71,6 +71,31 @@ end
 ---@param diff_height integer How much to move when resize window height. Must be positive.
 ---@param key "left" | "right" | "up" | "down" Type of direction key to be used to resize.
 function M.resize(win, diff_width, diff_height, key)
+    vim.validate {
+        win = { win, "number" },
+        diff_width = {
+            diff_width,
+            function(n)
+                return n >= 0
+            end,
+            "positive number",
+        },
+        diff_height = {
+            diff_height,
+            function(n)
+                return n >= 0
+            end,
+            "positive number",
+        },
+        key = {
+            key,
+            function(s)
+                return vim.list_contains({ "left", "right", "up", "down" }, s)
+            end,
+            "one of left, right, up, and down",
+        },
+    }
+
     if vim.api.nvim_win_get_config(win).relative ~= "" then
         resize_float(win, diff_width, diff_height, key)
         return
