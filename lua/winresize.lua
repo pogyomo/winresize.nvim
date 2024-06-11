@@ -31,9 +31,9 @@ local function resize_normal(win, diff_width, diff_height, key)
 
     if key == "left" or key == "right" then
         if have_neighbor_to(win, "right") then
-            setter(win, getter(win) + (key == "right" and diff_height or -diff_height))
+            setter(win, getter(win) + (key == "right" and diff_width or -diff_width))
         else
-            setter(win, getter(win) + (key == "right" and -diff_height or diff_height))
+            setter(win, getter(win) + (key == "right" and -diff_width or diff_width))
         end
     else
         if not have_neighbor_to(win, "down") and not have_neighbor_to(win, "up") then
@@ -41,9 +41,9 @@ local function resize_normal(win, diff_width, diff_height, key)
         end
 
         if have_neighbor_to(win, "down") then
-            setter(win, getter(win) + (key == "down" and diff_width or -diff_width))
+            setter(win, getter(win) + (key == "down" and diff_height or -diff_height))
         else
-            setter(win, getter(win) + (key == "down" and -diff_width or diff_width))
+            setter(win, getter(win) + (key == "down" and -diff_height or diff_height))
         end
     end
 end
@@ -59,9 +59,9 @@ local function resize_float(win, diff_width, diff_height, key)
     local getter = vim.api["nvim_win_get_" .. dir]
 
     if key == "left" or key == "right" then
-        setter(win, getter(win) + (key == "right" and diff_height or -diff_height))
+        setter(win, getter(win) + (key == "right" and diff_width or -diff_width))
     else
-        setter(win, getter(win) + (key == "down" and diff_width or -diff_width))
+        setter(win, getter(win) + (key == "down" and diff_height or -diff_height))
     end
 end
 
