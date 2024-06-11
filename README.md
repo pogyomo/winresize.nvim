@@ -1,6 +1,6 @@
 # :window: winresize.nvim
 
-A neovim plugin provide apis for resizing window as we expected.
+A neovim plugin which provide apis for resizing window as we expected.
 
 ## :clipboard: Requirements
 
