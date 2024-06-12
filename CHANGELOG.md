@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.0.0](https://github.com/pogyomo/winresize.nvim/compare/v1.1.1...v2.0.0) (2024-06-12)
+
+
+### ⚠ BREAKING CHANGES
+
+* merge `diff_width` and `diff_height` in `resize` into `amount`
+
+### Features
+
+* merge `diff_width` and `diff_height` in `resize` into `amount` ([8e0d659](https://github.com/pogyomo/winresize.nvim/commit/8e0d659730164483fdae85b5b035cc18459a5ebc))
+
 ## [1.1.1](https://github.com/pogyomo/winresize.nvim/compare/v1.1.0...v1.1.1) (2024-06-11)
 
 
