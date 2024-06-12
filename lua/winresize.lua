@@ -53,17 +53,11 @@ local function resize_normal(win, amount, dir)
     end
 
     if dir == "left" or dir == "up" then
-        if have_neighbor_to(win, invert_dir(dir)) then
-            setter(win, getter(win) - amount)
-        else
-            setter(win, getter(win) + amount)
-        end
+        local diff = have_neighbor_to(win, invert_dir(dir)) and -amount or amount
+        setter(win, getter(win) + diff)
     else
-        if have_neighbor_to(win, dir) then
-            setter(win, getter(win) + amount)
-        else
-            setter(win, getter(win) - amount)
-        end
+        local diff = have_neighbor_to(win, dir) and amount or -amount
+        setter(win, getter(win) + diff)
     end
 end
 
@@ -108,10 +102,9 @@ function M.resize(win, amount, dir)
 
     if vim.api.nvim_win_get_config(win).relative ~= "" then
         resize_float(win, amount, dir)
-        return
+    else
+        resize_normal(win, amount, dir)
     end
-
-    resize_normal(win, amount, dir)
 end
 
 return M
