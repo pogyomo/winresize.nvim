@@ -55,10 +55,10 @@ So, this plugin provide `resize` function for such purpose. You can use it as fo
 
 ```lua
 local resize = require("winresize").resize
-vim.keymap.set("n", "rh", resize(0, 2, 2, "left"))
-vim.keymap.set("n", "rj", resize(0, 2, 2, "down"))
-vim.keymap.set("n", "rk", resize(0, 2, 2, "up"))
-vim.keymap.set("n", "rl", resize(0, 2, 2, "right"))
+vim.keymap.set("n", "rh", resize(0, 2, "left"))
+vim.keymap.set("n", "rj", resize(0, 1, "down"))
+vim.keymap.set("n", "rk", resize(0, 1, "up"))
+vim.keymap.set("n", "rl", resize(0, 2, "right"))
 ```
 
 With it, you can resize window intutively.
@@ -86,24 +86,23 @@ submode.create("WinResize", {
     leave = { "q", "<ESC>" },
 }, {
     lhs = "h",
-    rhs = function() resize(0, 2, 2, "left") end,
+    rhs = function() resize(0, 2, "left") end,
 }, {
     lhs = "j",
-    rhs = function() resize(0, 2, 2, "down") end,
+    rhs = function() resize(0, 1, "down") end,
 }, {
     lhs = "k",
-    rhs = function() resize(0, 2, 2, "up") end,
+    rhs = function() resize(0, 1, "up") end,
 }, {
     lhs = "l",
-    rhs = function() resize(0, 2, 2, "right") end,
+    rhs = function() resize(0, 2, "right") end,
 })
 ```
 
 ## :desktop_computer: APIS
 
-- `resize(win, diff_width, diff_height, key)`
+- `resize(win, amount, dir)`
     - Resize the window which is either normal window or floating window.
     - `win: integer` Window handle for resize. 0 for current window.
-    - `diff_width: integer` How much to move when resize window width. Must be positive.
-    - `diff_height: integer` How much to move when resize window height. Must be positive.
-    - `key: "left" | "right" | "up" | "down"` Type of direction key to be used to resize.
+    - `amount: integer` How much to resize window. Must be positive.
+    - `dir: "left" | "right" | "up" | "down"` Type of direction key to be used to resize.

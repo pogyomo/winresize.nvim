@@ -1,8 +1,25 @@
 local M = {}
 
+---@alias Direction "left" | "right" | "up" | "down"
+
+---Invert given `dir`.
+---@param dir Direction
+---@return Direction
+local function invert_dir(dir)
+    if dir == "left" then
+        return "right"
+    elseif dir == "right" then
+        return "left"
+    elseif dir == "up" then
+        return "down"
+    else
+        return "up"
+    end
+end
+
 ---Check whether the window have neighbor to 'dir' or not.
 ---@param win integer Window handle, or 0 for current window.
----@param dir "left" | "right" | "up" | "down" Direction to check.
+---@param dir Direction Direction to check.
 ---@return boolean # True if the window have neighbor to 'dir'.
 local function have_neighbor_to(win, dir)
     local neighbor = vim.api.nvim_win_call(win, function()
@@ -21,74 +38,67 @@ end
 
 ---Resize the window as normal (not float) window.
 ---@param win integer Window handle for resize. 0 for current window.
----@param diff_width integer How much to move when resize window width. Must be positive.
----@param diff_height integer How much to move when resize window height. Must be positive.
----@param key "left" | "right" | "up" | "down" Type of direction key to be used to resize.
-local function resize_normal(win, diff_width, diff_height, key)
-    local dir = (key == "left" or key == "right") and "width" or "height"
-    local setter = vim.api["nvim_win_set_" .. dir]
-    local getter = vim.api["nvim_win_get_" .. dir]
+---@param amount integer How much to resize window. Must be positive.
+---@param dir Direction Type of direction key to be used to resize.
+local function resize_normal(win, amount, dir)
+    local postfix = (dir == "left" or dir == "right") and "width" or "height"
+    local setter = vim.api["nvim_win_set_" .. postfix]
+    local getter = vim.api["nvim_win_get_" .. postfix]
 
-    if key == "left" or key == "right" then
-        if have_neighbor_to(win, "right") then
-            setter(win, getter(win) + (key == "right" and diff_width or -diff_width))
-        else
-            setter(win, getter(win) + (key == "right" and -diff_width or diff_width))
-        end
-    else
+    -- Prevent statusline moves.
+    if dir == "up" or dir == "down" then
         if not have_neighbor_to(win, "down") and not have_neighbor_to(win, "up") then
             return
         end
+    end
 
-        if have_neighbor_to(win, "down") then
-            setter(win, getter(win) + (key == "down" and diff_height or -diff_height))
+    if dir == "left" or dir == "up" then
+        if have_neighbor_to(win, invert_dir(dir)) then
+            setter(win, getter(win) - amount)
         else
-            setter(win, getter(win) + (key == "down" and -diff_height or diff_height))
+            setter(win, getter(win) + amount)
+        end
+    else
+        if have_neighbor_to(win, dir) then
+            setter(win, getter(win) + amount)
+        else
+            setter(win, getter(win) - amount)
         end
     end
 end
 
 ---Resize the window as floating window.
 ---@param win integer Window handle for resize. 0 for current window.
----@param diff_width integer How much to move when resize window width. Must be positive.
----@param diff_height integer How much to move when resize window height. Must be positive.
----@param key "left" | "right" | "up" | "down" Type of direction key to be used to resize.
-local function resize_float(win, diff_width, diff_height, key)
-    local dir = (key == "left" or key == "right") and "width" or "height"
-    local setter = vim.api["nvim_win_set_" .. dir]
-    local getter = vim.api["nvim_win_get_" .. dir]
+---@param amount integer How much to resize window. Must be positive.
+---@param dir Direction Type of direction key to be used to resize.
+local function resize_float(win, amount, dir)
+    local postfix = (dir == "left" or dir == "right") and "width" or "height"
+    local setter = vim.api["nvim_win_set_" .. postfix]
+    local getter = vim.api["nvim_win_get_" .. postfix]
 
-    if key == "left" or key == "right" then
-        setter(win, getter(win) + (key == "right" and diff_width or -diff_width))
+    if dir == "down" or dir == "right" then
+        setter(win, getter(win) + amount)
     else
-        setter(win, getter(win) + (key == "down" and diff_height or -diff_height))
+        setter(win, getter(win) - amount)
     end
 end
 
 ---Resize the window.
 ---@param win integer Window handle for resize. 0 for current window.
----@param diff_width integer How much to move when resize window width. Must be positive.
----@param diff_height integer How much to move when resize window height. Must be positive.
----@param key "left" | "right" | "up" | "down" Type of direction key to be used to resize.
-function M.resize(win, diff_width, diff_height, key)
+---@param amount integer How much to resize window. Must be positive.
+---@param dir Direction Type of direction key to be used to resize.
+function M.resize(win, amount, dir)
     vim.validate {
         win = { win, "number" },
-        diff_width = {
-            diff_width,
-            function(n)
-                return n >= 0
-            end,
-            "positive number",
-        },
-        diff_height = {
-            diff_height,
+        amount = {
+            amount,
             function(n)
                 return n >= 0
             end,
             "positive number",
         },
         key = {
-            key,
+            dir,
             function(s)
                 return vim.list_contains({ "left", "right", "up", "down" }, s)
             end,
@@ -97,11 +107,11 @@ function M.resize(win, diff_width, diff_height, key)
     }
 
     if vim.api.nvim_win_get_config(win).relative ~= "" then
-        resize_float(win, diff_width, diff_height, key)
+        resize_float(win, amount, dir)
         return
     end
 
-    resize_normal(win, diff_width, diff_height, key)
+    resize_normal(win, amount, dir)
 end
 
 return M
