@@ -54,7 +54,11 @@ movement of `rh` and `rl` inverted compare to as we expected.
 So, this plugin provide `resize` function for such purpose. You can use it as follow.
 
 ```lua
-local resize = require("winresize").resize
+local resize = function(win, amt, dir)
+    return function()
+        require("winresize").resize(wind, amt, dir)
+    end
+end
 vim.keymap.set("n", "rh", resize(0, 2, "left"))
 vim.keymap.set("n", "rj", resize(0, 1, "down"))
 vim.keymap.set("n", "rk", resize(0, 1, "up"))
