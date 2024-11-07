@@ -1,4 +1,4 @@
-*winresize.nvim.txt*     For Neovim >= 0.10.0     Last change: 2024 October 10
+*winresize.nvim.txt*     For Neovim >= 0.10.0    Last change: 2024 November 07
 
 ==============================================================================
 Table of Contents                           *winresize.nvim-table-of-contents*
@@ -73,7 +73,7 @@ follow.
 >lua
     local resize = function(win, amt, dir)
         return function()
-            require("winresize").resize(wind, amt, dir)
+            require("winresize").resize(win, amt, dir)
         end
     end
     vim.keymap.set("n", "rh", resize(0, 2, "left"))
