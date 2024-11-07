@@ -56,7 +56,7 @@ So, this plugin provide `resize` function for such purpose. You can use it as fo
 ```lua
 local resize = function(win, amt, dir)
     return function()
-        require("winresize").resize(wind, amt, dir)
+        require("winresize").resize(win, amt, dir)
     end
 end
 vim.keymap.set("n", "rh", resize(0, 2, "left"))
