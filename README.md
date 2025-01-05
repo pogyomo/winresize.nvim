@@ -88,18 +88,12 @@ submode.create("WinResize", {
     mode = "n",
     enter = "<Leader>r",
     leave = { "q", "<ESC>" },
-}, {
-    lhs = "h",
-    rhs = function() resize(0, 2, "left") end,
-}, {
-    lhs = "j",
-    rhs = function() resize(0, 1, "down") end,
-}, {
-    lhs = "k",
-    rhs = function() resize(0, 1, "up") end,
-}, {
-    lhs = "l",
-    rhs = function() resize(0, 2, "right") end,
+    default = function(register)
+        register("h", function() resize(0, 2, "left") end)
+        register("j", function() resize(0, 1, "down") end)
+        register("k", function() resize(0, 1, "up") end)
+        register("l", function() resize(0, 2, "right") end)
+    end,
 })
 ```
 
