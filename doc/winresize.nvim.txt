@@ -1,4 +1,4 @@
-*winresize.nvim.txt*     For Neovim >= 0.10.0     Last change: 2025 January 05
+*winresize.nvim.txt*     For Neovim >= 0.10.0     Last change: 2025 January 06
 
 ==============================================================================
 Table of Contents                           *winresize.nvim-table-of-contents*
