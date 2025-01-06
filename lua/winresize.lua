@@ -82,13 +82,23 @@ end
 ---@param amount integer How much to resize window. Must be positive.
 ---@param dir Direction Type of direction key to be used to resize.
 function M.resize(win, amount, dir)
-    vim.validate("win", win, "number")
-    vim.validate("amount", amount, function(n)
-        return n >= 0
-    end, "positive number")
-    vim.validate("dir", dir, function(s)
-        return vim.list_contains({ "left", "right", "up", "down" }, s)
-    end, "one of left, right, up, and down")
+    vim.validate {
+        win = { win, "number" },
+        amount = {
+            amount,
+            function(n)
+                return n >= 0
+            end,
+            "positive number",
+        },
+        key = {
+            dir,
+            function(s)
+                return vim.list_contains({ "left", "right", "up", "down" }, s)
+            end,
+            "one of left, right, up, and down",
+        },
+    }
 
     if vim.api.nvim_win_get_config(win).relative ~= "" then
         resize_float(win, amount, dir)
